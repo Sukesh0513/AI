@@ -1,0 +1,91 @@
+class Room{
+	private World w;
+	Node N[][] = new Node[4][4];
+	HashMap<Node , Integer> nodes_left = new HashMap<Node , Integer>();
+	HashMap<Node , Integer> min_distance = new HashMap<Node , Integer>();
+	HashMap<Node , Node> rout = new HashMap<Node , Node>();
+	
+	
+	Room(World w) {
+		this.w = w;
+	}
+	
+	int cX = w.getPlayerX();
+    int cY = w.getPlayerY();
+    
+	
+	 void create_graph(){
+		 
+		 for(int i=0; i<4; i++) {
+				for(int j=0; j<4; j++){
+					this.N[i][j] = new Node();
+				}
+			}
+		 
+			for(int i=1; i<3; i++) {
+				for(int j=1; j<3; j++){
+					this.N[i][j].c1 = this.N[i][j+1];
+					this.N[i][j].c2 = this.N[i+1][j];
+					this.N[i][j].c3 = this.N[i][j-1];
+					this.N[i][j].c4 = this.N[i-1][j];
+				}
+			}
+			
+			for(int i=1, j=0; i<3; i++) {
+				
+					this.N[i][j].c1 = this.N[i][j+1];
+					this.N[i][j].c2 = this.N[i+1][j];
+					this.N[i][j].c4 = this.N[i-1][j];
+			}
+			
+			for(int i=1, j=3; i<3; i++) {
+				
+					this.N[i][j].c2 = this.N[i+1][j];
+					this.N[i][j].c3 = this.N[i][j-1];
+					this.N[i][j].c4 = this.N[i-1][j];
+				}
+				
+			
+			
+				for(int j=1, i=0; j<3; j++){
+					this.N[i][j].c1 = this.N[i][j+1];
+					this.N[i][j].c2 = this.N[i+1][j];
+					this.N[i][j].c3 = this.N[i][j-1];
+				}
+			
+			
+			
+				for(int j=1, i=3; j<3; j++){
+					this.N[i][j].c1 = this.N[i][j+1];
+					this.N[i][j].c3 = this.N[i][j-1];
+					this.N[i][j].c4 = this.N[i-1][j];
+				}
+					
+			
+			this.N[0][0].c1 = this.N[0][1];
+			this.N[0][0].c2 = this.N[1][0];
+			
+			this.N[3][0].c1 = this.N[3][1];
+			this.N[3][0].c4 = this.N[2][0];
+			
+			this.N[0][3].c1 = this.N[1][3];
+			this.N[0][3].c3 = this.N[0][2];
+			
+			this.N[3][3].c3 = this.N[2][3];
+			this.N[3][3].c4 = this.N[3][2];	
+			
+			
+
+//			for(int i=0; i<4; i++) {
+//				for(int j=0; j<4; j++){	
+//					int count = 0;
+//					if(this.N[i][j].c1!=null) count ++;
+//					if(this.N[i][j].c2!=null) count ++;
+//					if(this.N[i][j].c3!=null) count ++;
+//					if(this.N[i][j].c4!=null) count ++;
+//					
+//					System.out.println("no of rooms connected to the room ["+i+","+j+"]"+count);
+//				}
+//			}
+			
+		}
